@@ -1,0 +1,22 @@
+
+[nz-form] {
+    width: 550px;
+    position: absolute;
+    z-index: 1;
+    right: 10%;
+    top: 6px;
+    bottom: 24px;
+}
+
+button {
+  margin-left: 8px;
+}
+
+.colorSpan{
+  color: #8492A6;
+}
+
+.register-from{
+  opacity: 0.8;
+}
+

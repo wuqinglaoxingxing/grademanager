@@ -1,0 +1,32 @@
+.btnClass{
+    font-weight: bold;
+    height: 20px;
+    width: 60px;
+    font-size: 12px;
+    padding: 0;
+    color: #dddddd;
+    background-color: #219E91;
+}
+
+.btnClass:hover{
+    color: #666666;
+}
+
+.divTable ::ng-deep .ant-table-thead>tr>th{
+    background-color: #222E3F!important;
+}
+
+::ng-deep .ant-pagination-item{
+    background-color:transparent;
+}
+
+.tableClass{
+    background-image: linear-gradient(to bottom right,#232C3D,#213E4C,#26505E,#6BAA8F,#485D60,#32313F,#1E1D2B)!important;
+    color: #cccccc;font-weight: 600;
+}
+
+.tableClass>tr:hover>td{
+    background-color: #80B684!important;
+}
+
+

@@ -1,0 +1,6 @@
+.contentDiv{
+    background:url(/assets/images/17.jpg) no-repeat;font-size: 0;
+    position: fixed;top: 0;left: 0;width: 100%;height: 100%;z-index: -1;background-size: cover;bottom:0;
+}
+
+

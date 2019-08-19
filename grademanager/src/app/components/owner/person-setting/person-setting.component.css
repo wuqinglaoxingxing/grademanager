@@ -1,0 +1,56 @@
+[nz-icon] {
+    margin:0 6px 0 6px;
+    font-size: 14px;
+}
+
+.editClass{
+    background-color: #F4F4F4;height: 30px;display: inline-block;width: 100%;border-bottom: 1px #aaaaaa solid;
+}
+
+.editDivClass{
+    width: 62px;
+    display: inline-block;
+    cursor: default;
+    width: 62px;margin: 5px 3px 5px 6px;
+}
+
+.editDivClass:hover{
+
+    background-color: #E2D1BD;
+    border-radius: 5px;
+   
+}
+
+.editDivSpanClass{
+    line-height: 14px;height: 14px;font-size: 14px;
+}
+
+.linFG{
+    margin: 0px!important;
+    background-color:#334454;
+    height: 1.2em!important;
+}
+
+.disabledClass{
+    cursor: not-allowed;
+    color: #B8B8B8; 
+}
+
+.undisabledClass{
+    background-color : #FFFFFF;
+    color:#745974; 
+    cursor: text;
+}
+
+:host ::ng-deep .ant-avatar {
+    margin-top: 16px;
+    margin-right: 16px;
+}
+
+.nzExplain{
+    color: #f5222d;
+}
+
+.pwdClass{
+    visibility: hidden;
+}

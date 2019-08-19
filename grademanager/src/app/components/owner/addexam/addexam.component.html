@@ -1,0 +1,38 @@
+<div style="margin-top: 3%;">
+  <div style="text-align: center;">
+      <span>&nbsp;&nbsp;考试年级&nbsp;&nbsp;</span>
+      <nz-select style="width: 200px;" nzAllowClear nzPlaceHolder="请选择年级" [(ngModel)]="selectedGradeValue" (ngModelChange)="gradeChange()">
+          <nz-option *ngFor="let grade of gradelist" [nzValue]="grade.id" [nzLabel]="grade.gradename"></nz-option>
+      </nz-select>
+      <span>&nbsp;&nbsp;考试专业&nbsp;&nbsp;</span>
+      <nz-select style="width: 200px;" nzAllowClear nzPlaceHolder="请选择专业" [(ngModel)]="selectedMajorValue" (ngModelChange)="majorChange()">
+          <nz-option *ngFor="let major of majorlist" [nzValue]="major.id" [nzLabel]="major.mname"></nz-option>
+      </nz-select>
+      <span>&nbsp;&nbsp;考试班级&nbsp;&nbsp;</span>
+      <nz-select style="width: 200px;" nzAllowClear nzPlaceHolder="请选择班级" [(ngModel)]="selectedClazzValue" (ngModelChange)="examBtn()">
+          <nz-option *ngFor="let clazz of clazzlist" [nzValue]="clazz.id" [nzLabel]="clazz.cname"></nz-option>
+      </nz-select>
+  </div>
+  <br>
+  <div  style="text-align: center;">
+      <span>&nbsp;&nbsp;考试课程&nbsp;&nbsp;</span>
+      <nz-select style="width: 200px;" nzAllowClear nzPlaceHolder="请选择课程" [(ngModel)]="selectedCourseValue" (ngModelChange)="examBtn()">
+          <nz-option *ngFor="let course of courselist" [nzValue]="course.cname" [nzLabel]="course.cname"></nz-option>
+      </nz-select>
+      <span>&nbsp;&nbsp;考试类型&nbsp;&nbsp;</span>
+      <nz-select style="width: 200px;" nzAllowClear nzPlaceHolder="请选择考试类型" [(ngModel)]="selectedTypeValue" (ngModelChange)="examBtn()">
+          <nz-option *ngFor="let type of examtype" [nzValue]="type" [nzLabel]="type"></nz-option>
+      </nz-select>
+      <span>&nbsp;&nbsp;考试时间&nbsp;&nbsp;</span>
+      <nz-date-picker style="width: 200px;" [(ngModel)]="selectedTimeValue" nzShowTime (ngModelChange)="examBtn()"></nz-date-picker>
+  </div>
+  <br>
+  <div style="text-align: center;position: relative;">
+      <span style="display: inline-block;position: relative;top: -60px;font-size: 14px;">备注&nbsp;&nbsp;</span>
+      <textarea style="width: 400px;height: 80px;" rows="3" nz-input [(ngModel)]="selectInputValue"></textarea>   
+  </div>
+  <br>
+  <div style="text-align: center;">
+      <button nz-button nzType="primary" [nzLoading]="isLoading" [disabled]="examFlag" style="width: 200px" (click)="addExam()">添加考试</button>
+  </div>
+</div>

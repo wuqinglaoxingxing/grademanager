@@ -1,0 +1,128 @@
+
+<div style="height: 100%;overflow-y: auto;margin-top: 3%;">
+  <nz-list [nzDataSource]="data" [nzRenderItem]="item" [nzItemLayout]="'horizontal'" nzBordered  nzSize="small">
+    <ng-template #item let-item>
+      <nz-list-item>
+        <nz-list-item-meta [nzTitle]="nzTitle" [nzAvatar]="item.photo" [nzDescription]="item.description">
+          <ng-template #nzTitle>
+            <a (click)="openmanager(item.title)">{{ item.title }}</a>
+          </ng-template>
+        </nz-list-item-meta>
+      </nz-list-item>
+    </ng-template>
+  </nz-list>
+</div>
+
+<nz-modal
+  [(nzVisible)]="isVisibleGrade"
+  [nzTitle]="modalTitle1"
+  [nzContent]="modalContent1"
+  [nzFooter]="modalFooter1"
+  (nzOnCancel)="handleCancel()">
+  <ng-template #modalTitle1>
+    {{title}}
+  </ng-template>
+  <ng-template #modalContent1>
+      <div class="modelClass">
+        <nz-tag *ngFor="let tag of taglist" [nzColor]="tag.color" nz-tooltip [nzTitle]="tag.gradename">{{tag.gradename}}</nz-tag><br>
+        <div style="margin-top: 10px;">
+          <nz-year-picker [(ngModel)]="year" (ngModelChange)="onChange($event)" nzPlaceHolder="选择学年"></nz-year-picker>
+          <button nz-button nzType="primary" (click)="addYear()" [disabled]="yearDisabled" style="margin-left: 10px;">添加</button>
+        </div>
+      </div>
+  </ng-template>
+
+  <ng-template #modalFooter1>
+    <button nz-button nzType="primary" (click)="handleCancel()">关闭</button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="isVisibleMajor"
+  [nzTitle]="modalTitle2"
+  [nzContent]="modalContent2"
+  [nzFooter]="modalFooter2"
+  (nzOnCancel)="handleCancel()">
+  <ng-template #modalTitle2>
+    {{title}}
+  </ng-template>
+  <ng-template #modalContent2>
+    <div class="modelClass">
+      <nz-tag *ngFor="let tag of taglist" [nzColor]="tag.color" nz-tooltip [nzTitle]="tag.mname">{{tag.mname}}</nz-tag><br>
+      <div style="margin-top: 10px;">
+        <input nz-input placeholder="添加专业名称" [(ngModel)]="major" style="width:60%;"/>
+        <button nz-button nzType="primary" (click)="addmajor()" style="margin-left: 10px;">添加</button>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #modalFooter2>
+    <button nz-button nzType="primary" (click)="handleCancel()">关闭</button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="isVisibleCourse"
+  [nzTitle]="modalTitle3"
+  [nzContent]="modalContent3"
+  [nzFooter]="modalFooter3"
+  (nzOnCancel)="handleCancel()">
+  <ng-template #modalTitle3>
+    {{title}}
+  </ng-template>
+  <ng-template #modalContent3>
+    <div class="modelClass">
+      <nz-select style="width: 200px;margin-bottom: 10px;" [(ngModel)]="selectedValue" (ngModelChange)="selectChange()" nzAllowClear nzPlaceHolder="请选择专业">
+        <nz-option *ngFor="let tag of taglist" [nzValue]="tag" [nzLabel]="tag.mname"></nz-option>
+      </nz-select>
+      <div *ngIf="selectedValue!=null&&selectedValue!=''">
+        <span style="font-family: cursive;font-size: 18px;">该专业已有的课程:</span><br>
+        <nz-tag *ngFor="let course of courses" [nzColor]="course.color" nz-tooltip [nzTitle]="course.cname">{{course.cname}}</nz-tag><br>
+        <div style="margin-top: 10px;">
+          <el-input placeholder="请输入想要添加的课程" icon="plus" size="small" (icon-click)="addcourse()" [(ngModel)]="course"></el-input>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #modalFooter3>
+    <button nz-button nzType="primary" (click)="handleCancel()">关闭</button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="isVisibleClazz"
+  [nzTitle]="modalTitle4"
+  [nzContent]="modalContent4"
+  [nzFooter]="modalFooter4"
+  (nzOnCancel)="handleCancel()">
+  <ng-template #modalTitle4>
+    {{title}}
+  </ng-template>
+  <ng-template #modalContent4>
+    <div class="modelClass">
+      <nz-cascader  style="width: 400px;margin-bottom: 10px;" [nzExpandTrigger]="'hover'"[nzOptions]="optionValues"
+         [(ngModel)]="gradeMajorValue" (ngModelChange)="getClazzList($event)" nzPlaceHolder="选择年级和专业"></nz-cascader>
+      <div *ngIf="clazzlist!=null">
+        <div *ngIf="clazzlist.length>0">
+          <span style="font-family: cursive;font-size: 18px;">该年级,该专业已有的班级:</span><br>
+          <nz-tag *ngFor="let clazz of clazzlist" [nzColor]="clazz.color" nz-tooltip [nzTitle]="clazz.cname">{{clazz.cname}}</nz-tag>
+          <nz-tag *ngIf="!tagVisible" class="editable-tag" nzNoAnimation (click)="showTag($event)">
+            <i nz-icon type="plus"></i> New Class
+          </nz-tag>
+          <input nz-input nzSize="small" [hidden]="!tagVisible" [(ngModel)]="tagValue" style="width: 78px;" id="tagInput"
+            (blur)="handleInputConfirm()" (keydown.enter)="handleInputConfirm()"/>
+        </div>
+        <div *ngIf="clazzlist.length==0">
+          <span style="font-family: cursive;font-size: 18px;color: red;">该年级,该专业还没有创建班级</span><br>
+          <nz-tag *ngIf="!tagVisible" class="editable-tag" nzNoAnimation (click)="showTag($event)">
+              <i nz-icon type="plus"></i> New Class
+          </nz-tag>
+          <input nz-input nzSize="small" [hidden]="!tagVisible" [(ngModel)]="tagValue" style="width: 78px;" id="tagInput"
+            (blur)="handleInputConfirm()" (keydown.enter)="handleInputConfirm()"/>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #modalFooter4>
+    <button nz-button nzType="primary" (click)="handleCancel()">关闭</button>
+  </ng-template>
+</nz-modal>

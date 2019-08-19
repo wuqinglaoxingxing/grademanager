@@ -1,0 +1,6 @@
+.modelClass{
+    overflow-y: auto;max-height: 280px;width: 100%;overflow-x: auto;
+}
+.editable-tag {
+    background: rgb(255, 255, 255);
+}

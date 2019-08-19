@@ -1,0 +1,28 @@
+<div class="noticeClass">
+</div>
+<div style="position: relative;margin-top: 3%;margin-left: 2%;">
+  <ul style="list-style: none;">
+    <li *ngFor="let notice of noticeList;let key=index">
+      <div class="divClass" (click)="ShowNotice(notice.id)">
+        <span class="spanClass">{{key+1}}.&nbsp;{{notice.title}}</span>
+        <span style="float:right;font-style: italic;font-weight: bold;">{{notice.time | date:'yyyy-MM-dd HH:mm:ss' }}</span>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<nz-modal [(nzVisible)]="isVisible" (nzOnCancel)="handleCancel()" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter">
+  <ng-template #modalTitle>
+    {{notice.title}}
+  </ng-template>
+
+  <ng-template #modalContent>
+    <nz-spin [nzSpinning]="isSpinning">
+      <div [innerHTML]="notice.notice" style="overflow-y: auto;height: 300px;width: 100%;"></div>
+    </nz-spin>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" (click)="handleOk()">我知道了</button>
+  </ng-template>
+</nz-modal>

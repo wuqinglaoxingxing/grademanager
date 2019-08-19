@@ -1,0 +1,31 @@
+.tableClass{
+    font-size: 12px!important;
+}
+
+.btnClass{
+    font-weight: bold;
+    height: 20px;
+    width: 60px;
+    font-size: 12px;
+    padding: 0;
+    color: #dddddd;
+}
+
+.btnClass:hover{
+    color: #666666;
+}
+
+.nBtnClass{
+    background-color: #ff4444;
+    width: 80px;height: 24px;
+    text-align: center;
+}
+
+
+.modalContentDiv{
+    height: 600px;overflow: auto;overflow-y: scroll;
+}
+
+.uploadBtn{
+    position: absolute;top: 0;right: 15px;margin-top: 0!important;
+}

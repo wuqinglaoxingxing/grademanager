@@ -1,0 +1,128 @@
+<div style="border: 2px #5574BB solid;border-radius: 5px;width: 60%;margin: 3% auto;">
+
+    <div class="editClass">
+      <!-- 编辑div -->
+      <div class="editDivClass" style="margin: 5px 6px 5px 3px;" (click)="edit()">
+        <i nz-icon>
+          <svg>
+              <path d="M754.56 146.56l-448 448a64 64 0 0 0 0 90.88 64 64 0 0 0 90.88 0L672 410.24V896H160V256h320a64 64 0 0 0 0-128H96a64 64 0 0 0-64 64v768a64 64 0 0 0 64 64h640a64 64 0 0 0 64-64V282.24l45.44-44.8a64 64 0 1 0-90.88-90.88z" fill="#383B48" p-id="5018"></path>
+              <path d="M928 64m-64 0a64 64 0 1 0 128 0 64 64 0 1 0-128 0Z" fill="#383B48" p-id="5019"></path>
+          </svg>
+        </i>
+        <span class="editDivSpanClass">编辑</span>
+      </div>
+
+      <nz-divider class="linFG" nzType="vertical"></nz-divider>
+      <!-- 提交div -->
+      <div class="editDivClass" (click)="submit()">
+        <i nz-icon type="save" theme="fill"></i><span  class="editDivSpanClass">提交</span>
+      </div>
+  
+      <nz-divider class="linFG" nzType="vertical"></nz-divider>
+      <!-- 重置 -->
+      <div class="editDivClass" (click)="reset()">
+        <i nz-icon type="interation" theme="fill"></i><span class="editDivSpanClass">重置</span>
+      </div>
+  
+      <nz-divider class="linFG" nzType="vertical"></nz-divider>
+      
+      <div class="editDivClass" style="width: 88px;" (click)="editPassword()">
+        <i nz-icon type="edit" theme="fill"></i><span class="editDivSpanClass">修改密码</span>
+      </div>
+      
+    </div>
+
+    <div style="width: 100%;display: inline-block;margin-top: 15px;">
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)" style="position: relative;">
+          <div style="width: 40%;margin-left: 15px;display: inline-block;">
+            <nz-form-item>
+              <nz-form-label style="width: 40px;" [nzSpan]="7">工号</nz-form-label>
+              <nz-form-control [nzSpan]="12"  style="width: 60%;"> 
+                  <input nz-input formControlName="userNumber" class="disabledClass" disabled>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-label style="width: 40px;" [nzSpan]="7">姓名</nz-form-label>
+              <nz-form-control [nzSpan]="12" nzHasFeedback style="width: 60%;"> 
+                  <input nz-input formControlName="username" class="disabledClass" disabled>
+                  <nz-form-explain class="nzExplain"  *ngIf="validateForm.get('username').dirty&&validateForm.get('username').hasError('username')">
+                      Please input right Chinese name!
+                  </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-label style="width: 40px;" [nzSpan]="7">性别</nz-form-label>
+              <nz-form-control [nzSpan]="12" nzHasFeedback style="width: 60%;"> 
+                  <nz-select formControlName="sex" [nzDisabled]="sexFlag">
+                    <nz-option nzValue="0" nzLabel="男"></nz-option>
+                    <nz-option nzValue="1" nzLabel="女"></nz-option>
+                  </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-label style="width: 40px;" [nzSpan]="7">手机</nz-form-label>
+              <nz-form-control [nzSpan]="12" nzHasFeedback style="width: 60%;" > 
+                  <input nz-input formControlName="phoneNumber" class="disabledClass" disabled>
+                    <nz-form-explain class="nzExplain" *ngIf="validateForm.get('phoneNumber').dirty && validateForm.get('phoneNumber').errors">
+                        <ng-container *ngIf="validateForm.get('phoneNumber').hasError('phoneNumber')">
+                            Please input right phone number!
+                        </ng-container>
+                    </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label style="width: 40px;" [nzSpan]="7">邮箱</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzHasFeedback  style="width: 60%;">
+                <input nz-input formControlName="email" type="email" class="disabledClass" disabled>
+                <nz-form-explain class="nzExplain" *ngIf="validateForm.get('email').dirty&&validateForm.get('email').errors">
+                    <ng-container *ngIf="validateForm.get('email').hasError('email')">
+                    The input is not valid E-mail!
+                    </ng-container>
+                    <ng-container *ngIf="validateForm.get('email').hasError('required')">
+                    Please input your E-mail!
+                    </ng-container>
+                </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+          </div>  
+
+          <div style="width: 50%;height: 300px;;display: inline-block;position: absolute;overflow-y: auto;">
+            <div style="height: 50px;;">
+                <span style="display: inline-block;line-height: 50px;">当前头像:</span>
+                <nz-avatar style="border: 1px #AAAAAA solid;margin: 0 5px;" nzIcon="user" [(nzSrc)]="person.avatar"></nz-avatar><br>
+            </div>
+            
+            <span *ngFor="let photo of photoList">
+              <nz-avatar class="avatarDisabled" style="border: 1px #AAAAAA solid;" nzIcon="user" [nzSrc]="photo" (click)="change(photo)"></nz-avatar>
+            </span>
+          </div>
+          <button nz-button nzType="primary" id="sub" style="display: none;"></button>
+        </form>
+    </div>
+
+    <nz-modal (keyup)="modelkeyUp($event)" [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()">
+      <ng-template #modalTitle>
+        修改密码
+      </ng-template>
+
+      <ng-template #modalContent>
+          <input nz-input [(ngModel)]="person.userNumber" [disabled]="true">
+          <span [ngClass]="{'pwdClass': true}">无情</span>
+
+          <input nz-input type="password" placeholder="new Password" [(ngModel)]="password1" (keyup)="pwd1()">
+          <span [ngClass]="{'pwdClass': pwdFlag, 'nzExplain':true}">两次密码或密码少于六位不一致</span>
+
+          <input nz-input type="password" placeholder="repeat new Password" [(ngModel)]="password2" (keyup)="pwd2()">
+          <span [ngClass]="{'pwdClass': pwdFlag, 'nzExplain':true}">两次密码或密码少于六位不一致</span>
+      </ng-template>
+
+      <ng-template #modalFooter>
+        <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="loading"  [disabled]="pwdBtn">确认修改</button>
+      </ng-template>
+    </nz-modal>
+
+  </div>

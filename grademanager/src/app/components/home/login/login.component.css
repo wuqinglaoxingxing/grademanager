@@ -1,0 +1,22 @@
+
+.login-form {
+  width: 22%;
+  position: absolute;
+  z-index: 1;
+  right: 20%;
+  top: 20%;
+  opacity: 0;
+  transition: opacity 2s;
+}
+
+.login-form-forgot {
+  float: right;
+}
+
+.login-form-button {
+  width: 100%;
+}
+
+.colorSpan{
+color: #8492A6;
+}

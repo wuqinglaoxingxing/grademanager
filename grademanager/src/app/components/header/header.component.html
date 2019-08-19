@@ -1,0 +1,35 @@
+<div class="logo">
+  <i><img src="assets/images/1.png"></i>&nbsp;&nbsp;成绩管理系统
+</div>
+<ul nz-menu [nzMode]="'horizontal'" [nzTheme]="'dark'" class="meauClass">
+  <li nz-menu-item *ngIf="isLogin&&!isAdmin" (click)="changeIndex()"><a [routerLink]="[ '/home']" >首页</a></li>
+  <li nz-menu-item *ngIf="isLogin&&!isAdmin" (click)="changeIsIndex()"><a [routerLink]="[ '/owner']">主页</a></li> 
+  <li nz-menu-item [nzDisabled]="true" style="float: right;" *ngIf="!isLogin">
+    <nz-dropdown>
+        <a nz-dropdown>
+          登录<i nz-icon type="down"></i>
+        </a>
+        <ul nz-menu [nzTheme]="'dark'">
+          <li nz-menu-item (click)="loginShow()">
+            <a [routerLink]="[ '/home/login' ]">教师</a>
+          </li>
+          <li nz-menu-item (click)="adminShow()">
+            <a [routerLink]="[ '/admin/login' ]">管理员</a>
+          </li>
+        </ul>
+      </nz-dropdown>
+  </li>
+  <li nz-menu-item [nzDisabled]="true" style="float: right;" *ngIf="isLogin">
+    <nz-avatar nzIcon="user" class="avatatClass" [nzSrc]="person.avatar"></nz-avatar>
+    <nz-dropdown>
+        <a nz-dropdown>
+            {{person.username}}<i nz-icon type="down"></i>
+        </a>
+        <ul nz-menu [nzTheme]="'dark'">
+          <li nz-menu-item (click)="logout()">
+            注销
+          </li>
+        </ul>
+      </nz-dropdown>
+  </li>
+</ul>

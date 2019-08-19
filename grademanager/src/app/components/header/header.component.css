@@ -1,0 +1,28 @@
+.logo {
+    width: 120px;
+    height: 28px;
+    background: rgba(255,255,255,.2);
+    position: absolute;
+    top: 10px;
+    left: 2%;
+    font-size: 12px;
+    line-height: 28px;
+    color: #8492A6;
+  }
+  :host ::ng-deep .ant-avatar {
+    margin-top: 16px;
+    margin-right: 16px;
+  }
+  
+  .avatatClass{
+    position: relative;
+    top: -10px;
+    line-height: normal;
+    right: -15px;
+    background-color: #aaaaaa;
+  }
+  
+  .meauClass{
+    margin-left: 200px;line-height:46px;height: 46px;background-color: #0D161E!important;
+  }
+  

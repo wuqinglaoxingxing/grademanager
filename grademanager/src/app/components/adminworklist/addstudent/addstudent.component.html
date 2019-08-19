@@ -1,0 +1,122 @@
+<div style="width: 80%;margin: 3% auto;" class="divTable">
+  <nz-table #headerTable [nzData]="clazzlist" (nzPageIndexChange)="pageChange($event)" nzSize="small" [nzPageSize]="8" [nzScroll]="{ y: '360px' }">
+    <thead class="tClass">
+      <tr style="font-size: 18px;font-family: cursive;">
+        <th nzWidth="15%">序号</th>
+        <th nzWidth="15%">年级</th>
+        <th nzWidth="30%">专业</th>
+        <th nzWidth="20%">班级</th>
+        <th nzWidth="20%">操作</th>
+      </tr>
+    </thead>
+    <tbody class="tableClass">
+        <tr *ngFor="let clazz of headerTable.data;let key=index">
+          <td>{{key+1+(pageIndex-1)*8}}</td>
+          <td>{{clazz.grade.gradename}}</td>
+          <td>{{clazz.major.mname}}</td>
+          <td>{{clazz.cname}}</td>
+          <td>
+            <button nz-button nzType="primary" class="btnClass" (click)="checkClazz(clazz)" style="margin-right: 8px;">查看</button>
+          </td>
+        </tr>
+    </tbody>
+  </nz-table>
+</div>
+
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle1" [nzContent]="modalContent1"  [nzWidth]="'50%'" [nzStyle]="{ top: '85px' }"
+  [nzFooter]="modalFooter1" (nzOnCancel)="handleCancel()">
+  <ng-template #modalTitle1>
+    <span *ngIf="clazz!=null">
+      {{clazz.grade.gradename}}   {{clazz.major.mname}}{{clazz.cname}} 名单
+    </span>
+  </ng-template>
+
+  <ng-template #modalContent1>
+    <nz-table #modalTable [nzData]="studentList" [nzPageSize]="10" [nzScroll]="{ y: '240px' }" [nzSize]="'small'" [(nzPageIndex)]="studentPageIndex">
+      <thead>
+        <tr>
+          <th nzWidth="30%">学号</th>
+          <th nzWidth="30%">姓名</th>
+          <th nzWidth="40%">电话</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of modalTable.data" (click)="showStu(data)">
+          <td>{{ data.sid }}</td>
+          <td>{{ data.sname }}</td>
+          <td>{{ data.phone }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </ng-template>
+
+  <ng-template #modalFooter1>
+    <button nz-button nzType="primary" style="float: left;background-color: #04DA6B;" (click)="openStudent()">单个增加</button>
+    <button nz-button nzType="primary" style="float: left;background-color: #7bd422; " (click)="openStudents()">批量导入</button>
+    <i nz-icon style="float: left;font-size: 30px;margin-left: 10px;" (click)="downStudents()">
+      <svg>
+          <path d="M875.386 65.331h-726.773c-46.083 0-83.282 37.199-83.282 83.282v726.773c0 46.083 37.199 83.282 83.282 83.282h726.773c46.083 0 83.282-37.199 83.282-83.282v-726.773c0-46.083-37.199-83.282-83.282-83.282zM867.058 847.626c0 10.549-8.883 19.433-19.433 19.433h-671.808c-10.549 0-19.433-8.883-19.433-19.433v-671.808c0-10.549 8.883-19.433 19.433-19.433h671.808c10.549 0 19.433 8.883 19.433 19.433v671.808z" p-id="3886" fill="#d81e06"></path><path d="M431.217 613.882h-185.441c-9.439 0-17.767 7.773-17.767 17.767v129.92c0 9.439 7.773 17.768 17.767 17.768h175.447c14.991 0 27.76-12.215 27.76-27.76v-120.481c-0.556-9.439-8.329-17.212-17.767-17.212zM431.217 241.333h-185.441c-9.439 0-17.767 7.773-17.767 17.767v268.167c0 9.439 7.773 17.767 17.767 17.767h185.441c9.439 0 17.767-7.773 17.767-17.767v-268.167c-0.556-9.994-8.329-17.767-17.767-17.767zM776.004 476.189h-240.407c-9.439 0-17.768 7.773-17.768 17.768v267.613c0 9.439 7.773 17.768 17.768 17.768h240.407c9.439 0 17.768-7.773 17.768-17.768v-267.613c0-9.994-7.773-17.767-17.768-17.767zM776.004 241.333h-240.407c-9.439 0-17.768 7.773-17.768 17.767v130.476c0 9.439 7.773 17.767 17.768 17.767h240.407c9.439 0 17.768-7.773 17.768-17.767v-130.476c0-9.994-7.773-17.767-17.768-17.767z" p-id="3887" fill="#d81e06"></path>
+      </svg>
+    </i>
+    <button nz-button nzType="primary" (click)="handleCancel()">关闭</button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isVisibleStudent" [nzTitle]="modalTitle2" [nzContent]="modalContent2"  [nzWidth]="'25%'" [nzStyle]="{ top: '105px' }"
+    [nzFooter]="modalFooter2" (nzOnCancel)="handleCancel()">
+  <ng-template #modalTitle2>
+    详情信息
+  </ng-template>
+
+  <ng-template #modalContent2>
+    <div *ngIf="student!=null" id="stuDiv">
+      <input nz-input placeholder="student number" [value]="student.sid" [disabled]="true"/>
+      <input nz-input placeholder="student name" [value]="student.sname" style="margin-top: 10px;margin-bottom: 10px;"/>
+      <input nz-input placeholder="student phone" [value]="student.phone" />
+    </div>
+  </ng-template>
+
+  <ng-template #modalFooter2>
+    <button nz-button nzType="primary" (click)="saveStu()">保存</button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isVisibleAddStudent" [nzTitle]="modalTitle3" [nzContent]="modalContent3"  [nzWidth]="'25%'" [nzStyle]="{ top: '105px' }"
+    [nzFooter]="modalFooter3" (nzOnCancel)="handleCancel()">
+  <ng-template #modalTitle3>
+    添加学生
+  </ng-template>
+
+  <ng-template #modalContent3>
+    <input nz-input placeholder="student number" [(ngModel)]="newStudent.sid" (keyup)="studentChange()"/>
+    <input nz-input placeholder="student name" [(ngModel)]="newStudent.sname" (keyup)="studentChange()" style="margin-top: 10px;margin-bottom: 10px;"/>
+    <input nz-input placeholder="student phone" [(ngModel)]="newStudent.phone" (keyup)="studentChange()" style="margin-bottom: 10px;"/>
+  </ng-template>
+
+  <ng-template #modalFooter3>
+    <button nz-button nzType="primary" (click)="checkStudentId()" [disabled]="studentDisabled">添加</button>
+  </ng-template>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isVisibleAddStudents" [nzTitle]="modalTitle4" [nzContent]="modalContent4"  [nzWidth]="'25%'" [nzStyle]="{ top: '105px' }"
+    [nzFooter]="modalFooter4" (nzOnCancel)="handleCancel()">
+  <ng-template #modalTitle4>
+    批量导入
+  </ng-template>
+
+  <ng-template #modalContent4>
+    <nz-spin nzSimple [nzSpinning]="!uploading">
+      <nz-upload [nzAction]="url+'/GradeManager/checkStudents'"  [nzLimit]="1" [nzFileList]="fileList" 
+      [nzBeforeUpload]="beforeUpload" [nzRemove]="removeFile" (nzChange)=getChange($event)>
+        <button nz-button><i nz-icon type="upload"></i><span>Click to Upload</span></button>
+      </nz-upload>
+      <div style="margin-top: 10px;margin-bottom: 10px;">
+        <button nz-button nzType="primary" (click)="studentUpload()">开始写入</button>
+      </div>
+    </nz-spin>
+  </ng-template>
+
+  <ng-template #modalFooter4>
+   
+  </ng-template>
+</nz-modal>

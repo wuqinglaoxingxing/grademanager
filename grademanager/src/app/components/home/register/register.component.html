@@ -1,0 +1,113 @@
+<form nz-form [formGroup]="validateForm" class="register-from" (ngSubmit)="submitForm($event,validateForm.value)">
+    <!-- 遮盖加载 -->
+    <nz-spin [nzSpinning]="isSpinning" [nzSize]="'large'" [nzTip]="'正在注册...'">
+    <!-- 账号 -->
+    <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired><span  class="colorSpan">职工号</span></nz-form-label>
+        <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="userNumber" placeholder="your account number">
+        <nz-form-explain *ngIf="validateForm.get('userNumber').dirty && validateForm.get('userNumber').errors || validateForm.get('userNumber').pending ">
+            <ng-container *ngIf="validateForm.get('userNumber').hasError('required')">
+            Please input your userNumber!
+            </ng-container>
+            <ng-container *ngIf="validateForm.get('userNumber').hasError('exist')">
+            The userNumber is existed!
+            </ng-container>
+            <ng-container *ngIf="validateForm.get('userNumber').pending">
+            Validating...
+            </ng-container>
+        </nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+
+<!-- 密码 -->
+    <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired><span  class="colorSpan">密码</span></nz-form-label>
+        <div>
+        <nz-form-control [nzSpan]="12" nzHasFeedback>
+            <input nz-input type="password" formControlName="password" placeholder="your password" (ngModelChange)="validateConfirmPassword()">
+            <nz-form-explain *ngIf="validateForm.get('password').dirty&&validateForm.get('password').hasError('required')">Please input your password!</nz-form-explain>
+        </nz-form-control>
+        </div>
+    </nz-form-item>
+
+    <!-- 重复密码 -->
+    <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired><span  class="colorSpan">确认密码</span></nz-form-label>
+        <nz-form-control [nzSpan]="12" nzHasFeedback>
+            <input nz-input type="password" formControlName="confirm" placeholder="confirm your password">
+            <nz-form-explain *ngIf="validateForm.get('confirm').dirty&&validateForm.get('confirm').errors">
+                <ng-container *ngIf="validateForm.get('confirm').hasError('required')">
+                Please confirm your password!
+                </ng-container>
+                <ng-container *ngIf="validateForm.get('confirm').hasError('confirm')">
+                Password is inconsistent!
+                </ng-container>
+            </nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- 姓名 -->
+    <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired><span  class="colorSpan">姓名</span></nz-form-label>
+        <div>
+        <nz-form-control [nzSpan]="12" nzHasFeedback>
+            <input nz-input formControlName="username" placeholder="your Name" >
+            <nz-form-explain *ngIf="validateForm.get('username').dirty&&validateForm.get('username').hasError('username')">
+                Please input right Chinese name!
+            </nz-form-explain>
+        </nz-form-control>
+        </div>
+    </nz-form-item>
+
+    <!-- 性别 -->
+    <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired><span  class="colorSpan">性别</span></nz-form-label>
+        <div>
+            <nz-form-control [nzSpan]="12">
+                <nz-radio-group formControlName="sex">
+                    <label nz-radio nzValue="0" ><span  class="colorSpan">男</span></label>
+                    <label nz-radio nzValue="1" ><span  class="colorSpan">女</span></label>
+                </nz-radio-group>
+            </nz-form-control>
+        </div>
+    </nz-form-item>
+
+    <!-- 电话 -->
+    <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired><span  class="colorSpan">手机号码</span></nz-form-label>
+        <nz-form-control [nzSpan]="12"  nzHasFeedback>
+            <input nz-input formControlName="phoneNumber" id="'phoneNumber'" placeholder="your phoneNumber">
+            <nz-form-explain *ngIf="validateForm.get('phoneNumber').dirty && validateForm.get('phoneNumber').errors">
+                <ng-container *ngIf="validateForm.get('phoneNumber').hasError('phoneNumber')">
+                    Please input right phone number!
+                </ng-container>
+            </nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- e-mail -->
+    <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired><span  class="colorSpan">邮箱</span></nz-form-label>
+        <nz-form-control [nzSpan]="12" nzHasFeedback>
+        <input nz-input formControlName="email" placeholder="your email" type="email">
+        <nz-form-explain *ngIf="validateForm.get('email').dirty&&validateForm.get('email').errors">
+            <ng-container *ngIf="validateForm.get('email').hasError('email')">
+            The input is not valid E-mail!
+            </ng-container>
+            <ng-container *ngIf="validateForm.get('email').hasError('required')">
+            Please input your E-mail!
+            </ng-container>
+        </nz-form-explain>
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- 按钮 -->
+    <nz-form-item>
+        <nz-form-control [nzOffset]="7" [nzSpan]="12">
+        <button nz-button nzType="primary" [disabled]="!validateForm.valid">Submit</button>
+        <button nz-button (click)="resetForm($event)">Reset</button>
+        </nz-form-control>
+    </nz-form-item>
+    </nz-spin>
+</form>

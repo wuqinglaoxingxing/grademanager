@@ -1,0 +1,47 @@
+<div style="margin-top: 3%;">
+  <nz-table
+    #ajaxTable
+    nzSize="small" 
+    nzShowSizeChanger
+    [nzData]="listOfData"
+    [nzLoading]="loading"
+    [nzTotal]="total"
+    [(nzPageIndex)]="pageIndex"
+    [(nzPageSize)]="pageSize"
+    (nzPageIndexChange)="searchData()"
+    (nzPageSizeChange)="searchData(true)"
+    [nzFrontPagination]="false">
+    <thead (nzSortChange)="sort($event)" nzSingleSort>
+      <tr>
+        <th>id</th>
+        <th nzShowSort nzSortKey="userNumber">职工号</th>
+        <th nzCustomFilter>
+          姓名
+          <nz-dropdown nzTrigger="click" nzPlacement="bottomRight" [nzClickHide]="false" nzTableFilter #dropdown>
+            <i nz-icon type="search" [ngStyle]="{'color': '#999999'}" theme="outline" class="ant-table-filter-icon" [class.ant-table-filter-open]="dropdown.nzVisible" nz-dropdown></i>
+            <div class="search-box">
+              <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue">
+              <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Search</button>
+              <button nz-button nzSize="small" (click)="reset()">Reset</button>
+            </div>
+          </nz-dropdown>
+          
+        </th>
+        <th>性别</th>
+        <th>手机号码</th>
+        <th>email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of listOfData">
+        <td>{{data.id}}</td>
+        <td>{{data.userNumber}}</td>
+        <td>{{data.username}}</td>
+        <td *ngIf="data.sex==0">男</td>
+        <td *ngIf="data.sex==1">女</td>
+        <td>{{data.phoneNumber}}</td>
+        <td>{{data.email}}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

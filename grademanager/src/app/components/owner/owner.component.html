@@ -1,0 +1,18 @@
+<nz-sider *ngIf="isLogin&&isIndex" class="asideClass">
+  <app-aside [parent]="this"></app-aside>
+</nz-sider>
+
+<div class="scroll">
+  <div class="contentClass">
+    <nz-tabset [nzType]="'card'" [nzSelectedIndex]="index" [nzSize]="'small'" [nzTabBarGutter]=2>
+      <nz-tab *ngFor="let tab of tabs" [nzTitle]="titleTemplate"  (nzSelect)="tabSelect(tab)">
+        <ng-template #titleTemplate>
+          <div>{{ tab.name }}</div>
+          <!-- <div *ngIf="tab.id=='notice'">{{ tab.name }}</div> -->
+          <!-- <div *ngIf="tab.id!='notice'">{{ tab.name }}<i nz-icon type="close" class="ant-tabs-close-x" (click)="closeTab(tab)"></i></div> -->
+        </ng-template>
+        <router-outlet></router-outlet>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+</div>

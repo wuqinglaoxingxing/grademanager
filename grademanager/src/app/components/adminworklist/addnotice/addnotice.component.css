@@ -1,0 +1,12 @@
+
+.btnClass{
+    float: right;border: 1px #aaaaaa solid;margin-top: 12px;
+}
+
+.inputClass{
+    width:85%;margin-top:12px;background-color: #698076;color: #cccccc;
+}
+
+.editorClass{
+    margin-top: 20px; height: 76%;background-color: #698076;color: #cccccc;
+}

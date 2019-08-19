@@ -1,0 +1,57 @@
+<div style="margin-top: 12px;height: 34px;">
+  <button nz-button nzType="primary" (click)="addNotice()" style="float: right;">添加通知</button>
+</div>
+<div style="margin-top: 10px;" class="divTable">
+  <nz-table #headerTable  [nzData]="noticeList" (nzPageIndexChange)="pageChange($event)" nzSize="small" [nzPageSize]="10" [nzScroll]="{ y: '330px' }">
+    <thead>
+      <tr style="background-color: #aaaaaa;">
+        <th nzWidth="10%">序号</th>
+        <th nzWidth="20%">标题</th>
+        <th nzWidth="30%">内容</th>
+        <th nzWidth="20%">时间</th>
+        <th nzWidth="20%">操作</th>
+      </tr>
+    </thead>
+    <tbody class="tableClass">
+      <tr *ngFor="let data of headerTable.data;let key=index">
+        <td>{{key+1+(pageIndex-1)*10}}</td>
+        <td>
+          <span class="spanClass" style="width: 180px;">{{data.title}}</span>
+        </td>
+        <td>
+          <span class="spanClass" style="width: 280px;">{{data.text }}</span>
+        </td>
+        <td>{{data.time|date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+        <td>
+          <button nz-button nzType="primary" class="btnClass" (click)="checknotice(data.id)" style="margin-right: 8px;">查看</button>
+          <button nz-button nzType="primary" class="btnClass"  nz-popconfirm nzTitle="delete it?"
+          (nzOnConfirm)="deletenotice(data.id)" nzPlacement="top" (nzOnCancel)="cancel()"  
+          style="background-color: #ff4444;">删除</button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
+
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="modalTitle"
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  (nzOnCancel)="handleCancel()"
+  >
+  <ng-template #modalTitle>
+    {{notice.title}}
+  </ng-template>
+
+  <ng-template #modalContent>
+    <div style="width: 100%;">
+      <div id="div1" style="display: none"></div>
+      <div id="div2" style="height: 300px;"></div>
+    </div>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" (click)="handleOk()">我知道了</button>
+  </ng-template>
+</nz-modal>
